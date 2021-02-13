@@ -29,14 +29,14 @@ class Menu{
                     this.createNewCart();
                     break;
                 case "2":
-                    this.listCart();
+                    this.listCarts();
                     break;
-                case "3":
-                    this.addToCart();
-                    break;
-                case "4":
-                    this.deleteFromCart();
-                    break;
+                // case "3":
+                //     this.addToCart();
+                //     break;
+                // case "4":
+                //     this.deleteFromCart();
+                //     break;
                 default:
                     userChoice = 0
             }
@@ -51,9 +51,8 @@ class Menu{
         MAIN MENU
         0) EXIT
         1) CREATE CART
-        2) SHOW CART
-        3) ADD TO CART
-        4) DELETE FROM CART
+        2) SHOW CARTS
+        3) DELETE CART
         ___________________
         `);
     }
@@ -63,22 +62,24 @@ class Menu{
          this.carts.push(new Cart(cartName));
     }
     
-    listCart() {
+    listCart(selection) {
         let cartString = " ";
-        for(let i = 0;i < this.carts[0].items.length; i++) {
-            cartString += i + ") " + this.carts[i].items + "\n";
+        for(let i = 0;i < this.carts[selection].items.length; i++) {
+            cartString += i + ") " + this.carts[selection].items[i] + "\n";
         }
         let newItem = prompt(`
         ${cartString}
         What would you like to add to your cart?
         `)
 
-        this.carts[0].items.push(newItem)
+        // this.carts[selection].items.push(newItem);
+        this.addToCart(selection,newItem);
+        //console.log(this.carts[0]);
     }
 
-    addToCart() {
-        let item = prompt("What would you like to add to the cart?")
-        this.carts[0].items.push(new Item(item));
+    addToCart(selection,newItem) {
+        //let item = prompt("What would you like to add to the cart?")
+        this.carts[selection].items.push(newItem);
     }
 
     deleteFromCart() {
@@ -86,23 +87,22 @@ class Menu{
         this.carts[0].items.splice(index, 1);
     }
 
+    listCarts(){
+        let cartsString = " ";
+        for (let i = 0;i < this.carts.length; i++) {
+            cartsString += i + ") " + this.carts[i].name + "\n"
+        }
+        let selection = prompt(`
+        ${cartsString}
+        Which cart do you want to change?
+        `)
 
-
-    // listCarts(){
-    //     let cartsString = " ";
-    //     for (let i = 0;i < this.carts.length; i++) {
-    //         cartsString += i + ") " + this.carts[i].name + "\n"
-    //     }
-    //     let selection = prompt(`
-    //     ${cartsString}
-    //     Which cart do you want to change?
-    //     `)
-    // //alert(cartsString);
-    //     switch (selection) {
-    //         case "0":
-    //             this.listCart(selection)
-    //     }
-    // }
+        //alert(cartsString);
+        // switch (selection) {
+        //     case "0":
+        this.listCart(selection)
+        // }
+    }
 
 }
 
